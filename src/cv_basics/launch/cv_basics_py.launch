@@ -1,0 +1,22 @@
+<launch>
+  <node
+    pkg="cv_basics"
+    type="webcam_pub.py"
+    name="webcam_pub"
+    output="screen"
+  />
+  <node
+    pkg="cv_basics"
+    type="single_picture_test.py"
+    name="single_picture_test"
+    output="screen"
+    cwd="node"
+  />
+
+  <node
+    pkg="cv_basics"
+    type="webcam_sub.py"
+    name="webcam_sub"
+    output="screen"
+  />
+</launch>

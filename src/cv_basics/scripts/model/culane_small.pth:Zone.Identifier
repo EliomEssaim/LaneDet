@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://github.com/aliyun/conditional-lane-detection
+HostUrl=https://virutalbuy-public.oss-cn-hangzhou.aliyuncs.com/share/CondLaneNet/models/culane/culane_small.pth
