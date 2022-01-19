@@ -25,7 +25,7 @@ def callback(data):
    
   # Display image
   cv2.imshow("camera", current_frame)
-   
+  
   cv2.waitKey(1)
       
 def receive_message():
