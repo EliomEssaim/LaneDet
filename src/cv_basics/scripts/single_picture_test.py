@@ -134,6 +134,7 @@ class CondNet():
 
 def callback(data):
     global my_condnet
+    global accept_size,camera_size
     # Used to convert between ROS and OpenCV images
     br = CvBridge()
     
@@ -142,20 +143,28 @@ def callback(data):
     
     # Convert ROS Image message to OpenCV image
     current_frame = br.imgmsg_to_cv2(data)
+
+    # 转换格式
+    current_frame = cv2.resize(current_frame,accept_size)
+
     result_frame = my_condnet.test(current_frame)
+
+    # 还原格式
+    result_frame = cv2.resize(result_frame,camera_size)
     # Display image
     rospy.loginfo('publishing video frame')
     pub.publish(br.cv2_to_imgmsg(result_frame))
 
 def receive_message():
     global pub#不知道这样写可不可以实现pub共享
+    
     # Tells rospy the name of the node.
     # Anonymous = True makes sure the node has a unique name. Random
     # numbers are added to the end of the name. 
     rospy.init_node('CondNet_py', anonymous=True)
 
     # Node is subscribing to the video_frames topic
-    rospy.Subscriber('video_frames', Image, callback)
+    rospy.Subscriber('car_camera', Image, callback)
     
     pub = rospy.Publisher('CondNetOutput', Image, queue_size=10)
 
@@ -166,4 +175,6 @@ def receive_message():
     cv2.destroyAllWindows()
 if __name__ == '__main__':
     my_condnet = CondNet()
+    accept_size = (1640,590)
+    camera_size = (640,480)
     receive_message()
